@@ -17,17 +17,14 @@ class App extends Component {
 
   capture = () => {
     setInterval(() => {
-      fetch('http://127.0.0.1:5000/predict?=', {
-        method: 'GET',
-        params: {
-          img: this.webcam.getScreenshot()
-        }
-      }).then((response) =>
-        {
+      fetch('http://127.0.0.1:5000/predict?img='.concat(this.webcam.getScreenshot()), {
+        method: 'GET'
+      }).then((response) => (response.text()))
+          .then((responseText) => {
           this.setState({
-            emotions: response
+            emotions: responseText
           })})
-    }, 5000)
+    }, 300)
   };
   render() {
 
