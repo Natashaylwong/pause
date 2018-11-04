@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Webcam from "react-webcam";
-import { Wave, Random } from 'react-animated-text';
+import { Wave } from 'react-animated-text';
 import hour from './hour.svg';
-
-const ExampleOne = () => (
-  <Wave text="EXAMPLE TEXT" />
-);
 
 class App extends Component {
   setRef = webcam => {
@@ -15,7 +10,7 @@ class App extends Component {
   };
 
   capture = () => {
-    const imageSrc = this.webcam.getScreenshot();
+    setInterval(() => {this.webcam.getScreenshot()}, 5000)
   };
   render() {
     return (
@@ -34,7 +29,7 @@ class App extends Component {
             screenshotFormat="image/jpeg"
           />
           <div>
-            <button onClick={this.capture}>Capture photo</button>
+            <button onClick={this.capture} color='red'>Click to Stop Procrastinating</button>
           </div>
           </div>
         </body>
