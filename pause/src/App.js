@@ -10,7 +10,15 @@ class App extends Component {
   };
 
   capture = () => {
-    setInterval(() => {this.webcam.getScreenshot()}, 5000)
+    setInterval(() => {
+      fetch('http://127.0.0.1:5000/', {
+        method: 'GET',
+        params: {
+          img: this.webcam.getScreenshot()
+        }
+      }).then((response) =>
+        console.log(response))
+    }, 5000)
   };
   render() {
     return (
