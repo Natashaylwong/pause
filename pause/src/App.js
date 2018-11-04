@@ -11,16 +11,17 @@ class App extends Component {
 
   capture = () => {
     setInterval(() => {
-      fetch('http://127.0.0.1:5000/', {
+      fetch('http://127.0.0.1:5000/predict?=', {
         method: 'GET',
         params: {
           img: this.webcam.getScreenshot()
         }
       }).then((response) =>
-        console.log(response))
+        {console.log(response)})
     }, 5000)
   };
   render() {
+    console.log("hello")
     return (
       <div className="App">
         <header className="App-header">
