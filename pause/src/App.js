@@ -11,7 +11,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      emotions: ""
+      emotions: "debug"
     }
   }
 
@@ -35,7 +35,7 @@ class App extends Component {
           <img src={hour} className="App-logo" alt="logo"/>
         </header>
         <body className = "App-body">
-          <div style={{marginTop: 50}}>
+          <div style={{marginTop: 70}}>
             <Wave text="P A U S E" effect="fadeOut" effectChange={10.0} effectDelay={5.0} />
           </div>
           <div style={{marginTop: 100, marginBottom: 50}}>
