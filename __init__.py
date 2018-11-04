@@ -17,7 +17,9 @@ def predict():
     os.remove("face.png")
 
     prediction = procrastination.image_prediction(frame)
+
     return prediction
+
 
 if __name__ == "__main__":
     app.run()
