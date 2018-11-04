@@ -8,6 +8,12 @@ class App extends Component {
   setRef = webcam => {
     this.webcam = webcam;
   };
+  constructor(props) {
+    super(props);
+    this.state = {
+      emotions: ""
+    }
+  }
 
   capture = () => {
     setInterval(() => {
@@ -17,10 +23,14 @@ class App extends Component {
           img: this.webcam.getScreenshot()
         }
       }).then((response) =>
-        {console.log(response)})
+        {
+          this.setState({
+            emotions: response
+          })})
     }, 5000)
   };
   render() {
+
     console.log("hello")
     return (
       <div className="App">
@@ -40,6 +50,9 @@ class App extends Component {
           <div>
             <button onClick={this.capture} color='red'>Click to Stop Procrastinating</button>
           </div>
+          <p>
+            {this.state.emotions}
+          </p>
           </div>
         </body>
       </div>
