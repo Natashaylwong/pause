@@ -1,7 +1,10 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
+import flask
 import procrastination_api as procrastination
 import base64
 import os
+
+from PIL import Image
 
 app = Flask(__name__)
 image_name = "face.png"
@@ -9,16 +12,22 @@ image_name = "face.png"
 
 @app.route("/predict")
 def predict():
-    img_data = request.args.get('img')
-    with open("face.png", "wb") as fh:
-        fh.write(base64.decodebytes(img_data))
+    img_data = str(request)[71:-8].replace("%2F", "/")
 
-    frame = procrastination.convert_to_cv2("face.png")
-    os.remove("face.png")
+    img_file = open(image_name, "wb")
+    img_file.write(base64.urlsafe_b64decode(img_data))
+    img_file.close()
+
+    frame = procrastination.convert_to_cv2(image_name)
+    os.remove(image_name)
 
     prediction = procrastination.image_prediction(frame)
+    print(prediction)
 
-    return prediction
+    resp = flask.Response(prediction)
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+
+    return resp
 
 
 if __name__ == "__main__":

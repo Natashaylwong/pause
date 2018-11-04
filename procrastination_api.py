@@ -26,6 +26,7 @@ def image_prediction(frame):
     clahe_image = clahe.apply(gray)
     detections = detector(clahe_image, 1)
 
+    landmarks_vectorised = np.array([0 for _ in range(268)])
     for k, d in enumerate(detections):
         shape = predictor(clahe_image, d)
 
@@ -42,7 +43,7 @@ def image_prediction(frame):
         xcentral = [(x - xmean) for x in xlist]
         ycentral = [(y - ymean) for y in ylist]
 
-        landmarks_vectorised = np.array([])
+        landmarks_vectorised = []
         for x, y, w, z in zip(xcentral, ycentral, xlist, ylist):
             landmarks_vectorised.append(w)
             landmarks_vectorised.append(z)
@@ -53,8 +54,10 @@ def image_prediction(frame):
             landmarks_vectorised.append((math.atan2(y, x) * 360) / (2 * math.pi))
         landmarks_vectorised = np.array(landmarks_vectorised)
 
-    prediction = clf.predict(landmarks_vectorised.reshape(1, -1))[0]
-    cv2.imshow("image", frame)
+    if not np.any(landmarks_vectorised):
+        return "no face detected"
+    else:
+        prediction = clf.predict(landmarks_vectorised.reshape(1, -1))[0]
 
     return emotions[prediction]
 
